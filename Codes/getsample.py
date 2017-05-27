@@ -18,7 +18,7 @@ user_problem_sample_file = open(user_problem_sample_filepath,'w')
 
 sample = []
 for user_line in user_problem_file:
-	line_split = user_line.split(',')
+	line_split = user_line.split(';')
 	handle = line_split[0]
 	features = line_split[1:]
 	# If still on header, sample the problems
@@ -30,5 +30,5 @@ for user_line in user_problem_file:
 			sample.append(sample_index)
 	user_problem_sample_file.write(handle)
 	for i in sample:
-		user_problem_sample_file.write(',' + features[i])
+		user_problem_sample_file.write(';' + features[i])
 	user_problem_sample_file.write('\n')

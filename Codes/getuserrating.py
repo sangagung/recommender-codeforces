@@ -15,7 +15,7 @@ for line in user_list_file:
 user_rating_file_name = 'user-rating.csv'
 user_rating_file = open(data_location + user_rating_file_name, 'w')
 
-user_rating_file.write('handle,current_rating,max_rating\n')
+user_rating_file.write('handle;current_rating;max_rating\n')
 
 i = 0
 while i < len(username_list):
@@ -33,7 +33,7 @@ while i < len(username_list):
         current_rating = rating_spans[0].string
         max_rating = max_rating_spans[1].string
         
-        user_rating_file.write(handle + ',' + current_rating + ',' + max_rating + '\n')
+        user_rating_file.write(handle + ';' + current_rating + ';' + max_rating + '\n')
         user_rating_file.flush()
         i = i + 1
     except:

@@ -1,18 +1,4 @@
-A) Data Retrieval
-    1) User List - Indonesia (Scraping - Chrome Web Scraper: Google Chrome -> username-list.txt)
-    2) User Submissions (API: getuserstatus.py + username-list.txt -> userdata.txt)
-    3) Problem List & Statistics (API: apitest-problems.py -> problems.txt)
-    4) User Ratings (Current & Max) (Scraping - BeautifulSoup: getuserrating.py + username-list.txt -> user-rating.csv)
-B) Data Preprocessing - Combine & Select Required
-    1) Problem List - Indonesia & User Data: Solved & Attempted Problems
-        a) User Data: Solved & Attempted Problems (getuserproblems.py + userdata.txt -> user_problems_indonesia.txt)
-        b) Problem List - Indonesia (getuserproblems.py + userdata.txt -> problems_indonesia.txt)
-    2) Problem List - No Specials (filterspecialproblems.py + problems.txt + problems_indonesia.txt -> problems_indonesia_nonspecial.txt)
-    2) User-Problem Matrix (userproblemmatrix.py + user_problems_indonesia.txt + problems_indonesia_nonspecial.txt -> user_problem_matrix.csv)
-    3) Problem Difficulty List - Indonesia (problemdifficulty.py + problems.txt + problems_indonesia_nonspecial.txt -> problem_difficulty.csv)
-
-------------------------------------------------------------------------------------------------------------------------------------------------DEPRECATED, use:
-
+------------------------------------------------------------------------------------------------------------------------------------------------
 username-list.txt (1)
 apitest-problems.py -> problems.txt (2)
 getuserstatus.py + username-list.txt -> userdata.txt (3)

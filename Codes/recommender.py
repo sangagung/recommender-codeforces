@@ -63,21 +63,21 @@ user_list = []
 print('Creating user list and user rating index list...')
 user_rating_index = []
 for user_line in user_rating_file:
-	line_split = user_line.split(',')
+	line_split = user_line.split(';')
 	handle = line_split[0]
 	if (handle != 'handle'):
 		user_list.append(handle)
 		user_rating_index.append(get_rating_index(int(line_split[1])))
 
-print('Creating problem difficulty list...')
-problem_difficulty = {}
+print('Creating problem list...')
+problems = {}
 for problem_line in problem_difficulty_file:
-	line_split = problem_line.split(',')
+	line_split = problem_line.split(';')
 	problem_code = line_split[0]
 	if (problem_code == 'problem_code'):
 		continue
 	else:
-		problem_difficulty[problem_code] = int(line_split[1])
+		problems[problem_code] = {'name':line_split[1],'solved_count':int(line_split[2])}
 
 print('Welcome to Codeforces recommender system!')
 user_index = -1
@@ -93,7 +93,7 @@ user_problem_matrix = []
 problem_list = []
 attempted_problem_set = set()
 for user_line in user_problem_file:
-	line_split = user_line.split(',')
+	line_split = user_line.split(';')
 	handle = line_split[0]
 	if (handle == 'handle'):
 		problem_list = line_split[1:]
@@ -175,7 +175,10 @@ n_top = 5
 recommendations = list(map(lambda x:(problem_list[x[1]],x[0]), predict_score))[:n_top]
 
 # Sort recommendations by difficulty
-recommendations = sorted(recommendations, key=lambda x:problem_difficulty[x[0]], reverse=True)
+recommendations = sorted(recommendations, key=lambda x:problems[x[0]]['solved_count'], reverse=True)
 
-print('Done! Recommended problems (sorted by difficulty):')
-print(recommendations)
+base_url = 'http://codeforces.com/problemset/problem/'
+print('Done! Recommended problems (sorted by difficulty, from easiest):')
+for problem in recommendations:
+	full_url = base_url + problem[0][:-1] + '/' + problem[0][-1]
+	print(problem[0] + ' - ' + problems[problem[0]]['name'] + ' (' + full_url + ')')
