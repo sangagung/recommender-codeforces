@@ -81,8 +81,10 @@ print('')
 print('Welcome to Codeforces recommender system!')
 print('')
 
+# Allow repeat
 repeat = True
 while (repeat):
+	# Request username
 	user_index = -1
 	while (user_index < 0):
 		username = input('Input your username: ')
@@ -90,7 +92,8 @@ while (repeat):
 			user_index = user_list.index(username)
 		except ValueError as e:
 			print('Username not found!')
-
+	
+	# Build user-problem matrix
 	print('Creating user-problem matrix...')
 	user_problem_matrix = []
 	problem_list = []
@@ -181,7 +184,8 @@ while (repeat):
 
 	# Sort recommendations by difficulty
 	recommendations = sorted(recommendations, key=lambda x:problems[x[0]]['solved_count'], reverse=True)
-
+	
+	# Output recommendations
 	base_url = 'http://codeforces.com/problemset/problem/'
 	print('')
 	print('Done! Recommended problems (sorted by difficulty, from easiest):')
@@ -189,6 +193,8 @@ while (repeat):
 		full_url = base_url + problem[0][:-1] + '/' + problem[0][-1]
 		print(problem[0] + ' - ' + problems[problem[0]]['name'] + ' (' + full_url + ')')
 	print('')
+	
+	# Ask user if they want to repeat
 	answer = ''
 	while (answer != 'y' and answer != 'Y' and answer != 'n' and answer != 'N'):
 		answer = input('Need another recommendation? (y/n) ')

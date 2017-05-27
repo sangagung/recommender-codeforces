@@ -8,3 +8,7 @@ getspecialproblems.py + problems.txt -> problems_special.txt (6)
 getnonspecialindoproblem.py + problems_special.txt + problems_indonesia.txt -> problems_indonesia_nonspecial.txt (7)
 getproblemdifficulty.py + problems.txt + problems_indonesia_nonspecial.txt -> problem-difficulty.csv (II)
 getuserproblemmatrix.py + user_problems_indonesia.txt + problem-difficulty.csv + user-rating.csv -> user-problem.csv
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+username-list.txt is obtained by scraping user list page (http://codeforces.com/ratings/country/Indonesia/)
