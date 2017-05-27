@@ -1,3 +1,5 @@
+import math
+import numpy
 
 def get_score(verdict):
 	if (verdict == 'S'):
@@ -40,14 +42,14 @@ def get_rating_index(rating):
 
 data_location = '../Data/'
 
-user_problem_sample_filename = 'user-problem-sample.csv'
+user_problem_filename = 'user-problem.csv'
 user_rating_filename = 'user-rating.csv'
 
-user_problem_sample_filepath = data_location + user_problem_sample_filename
+user_problem_filepath = data_location + user_problem_filename
 user_rating_filepath = data_location + user_rating_filename
 
-print('Reading data... (' + user_problem_sample_filepath + ')')
-user_problem_sample_file = open(user_problem_sample_filepath,'r')
+print('Reading data... (' + user_problem_filepath + ')')
+user_problem_file = open(user_problem_filepath,'r')
 print('Reading data... (' + user_rating_filepath + ')')
 user_rating_file = open(user_rating_filepath,'r')
 
@@ -56,7 +58,7 @@ print('Creating user-problem matrix...')
 user_problem_matrix = []
 user_list = []
 problem_list = []
-for user_line in user_problem_sample_file:
+for user_line in user_problem_file:
 	line_split = user_line.split(',')
 	handle = line_split[0]
 	if (handle == 'handle'):
@@ -81,13 +83,39 @@ while (user_index < 0):
 	username = input('Input your username: ')
 	try:
 		user_index = user_list.index(username)
-	except(ValueError as e):
+	except ValueError as e:
 		print('Username not found!')
-# Compute correlation with all other (n-1) users
+# Get number of users and problems
 n_user = len(user_list)
+n_problem = len(problem_list)
+# Compute mean rating of user
+user_rating_mean = 0
+for problem_score in user_problem_matrix[user_index]:
+	user_rating_mean += problem_score
+user_rating_mean /= n_problem
+# Compute correlation with all other (n-1) users
 correlation_list = []
 for i in range(0,n_user):
+	if (i == user_index):
+		continue
 	# Get weight of user i from perspective of user a
 	weight = abs(user_rating_index[i] - user_rating_index[user_index])
-	avg(
-	
+	# Compute mean rating of user i
+	user_i_rating_mean = 0
+	for problem_score in user_problem_matrix[i]:
+		user_i_rating_mean += problem_score
+	user_i_rating_mean /= n_problem
+	# Calculate formula
+	nominator = 0
+	denominator_1 = 0
+	denominator_2 = 0
+	for j in range(0,n_problem):
+		user_rating_diff = user_problem_matrix[user_index][j] - user_rating_mean
+		user_i_rating_diff = user_problem_matrix[i][j] - user_i_rating_mean
+		nominator += user_rating_diff * user_i_rating_diff
+		denominator_1 += math.pow(user_rating_diff,2)
+		denominator_2 += math.pow(user_i_rating_diff,2)
+	corr = nominator / math.sqrt(denominator_1 * denominator_2)
+	correlation_list.append((corr,i))
+correlation_list = sorted(correlation_list, key = lambda x:x[0], reverse=True)
+nearest = 20
