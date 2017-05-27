@@ -1,0 +1,3 @@
+Codeforces API: http://codeforces.com/api/help/
+Web Scraping - BeautifulSoup Tutorial: https://www.dataquest.io/blog/web-scraping-tutorial-python/
+Web Scraping - BeautifulSoup Documentation: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
